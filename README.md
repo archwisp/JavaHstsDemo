@@ -17,23 +17,23 @@ accomplish when setting up this project:
 
 These are the files that make this demo work.
 
-* *tomcat.pem*: The CA certificate for use by the client (Curl, in this case).
-* *keystore.p12*: The keystore for the application.
-* *src/main/resources/templates/greeting.html*: The view script for the
+* **tomcat.pem**: The CA certificate for use by the client (Curl, in this case).
+* **keystore.p12**: The keystore for the application.
+* **src/main/resources/templates/greeting.html**: The view script for the
   Greeting controller.
-* *src/main/java/com/securityps/demo/hsts/Application.java*: The main
+* **src/main/java/com/securityps/demo/hsts/Application.java**: The main
   application class that executes the Spring application and embeds an
   HTTPS servlet in the Tomcat server that is started up by Spring Boot.
-* *src/main/java/com/securityps/demo/hsts/WebSecurityConfig.java*: The Spring
+* **src/main/java/com/securityps/demo/hsts/WebSecurityConfig.java**: The Spring
   Security configuration file that tells the application to send the HSTS
   header. This is where you would configure other Spring security options
   as well.
-* *src/main/java/com/securityps/demo/hsts/GreetingController.java*: A
+* **src/main/java/com/securityps/demo/hsts/GreetingController.java**: A
   basic Greeting controller from the Spring MVC tutorial.
-* *README.md*: This file.
-* *pom.xml*: The Maven build script.
+* **README.md**: This file.
+* **pom.xml**: The Maven build script.
 
-See the *References & Notes* section below for more details.
+See the **References & Notes** section below for more details.
 
 ## Dependencies
 
@@ -49,15 +49,18 @@ To build this project, you will need the following:
 
 1. Build the project:
 
-    JAVA_HOME=/usr; ~/Tools/apache-maven-3.2.1/bin/mvn clean install
+        JAVA_HOME=/usr; ~/Tools/apache-maven-3.2.1/bin/mvn clean install
 
 2. Run the project after it has been built:
 
-    java -jar target/java-hsts-demo-0.1.0.jar
+        java -jar target/java-hsts-demo-0.1.0.jar
 
 3. Access the application:
 
-    curl --cacert tomcat.pem -i https://127.0.0.1:8443/greeting
+If you get an error when you run this, see the **Platform Bugs** section
+below.
+
+        curl --cacert tomcat.pem -i https://127.0.0.1:8443/greeting
 
 ## References & Notes
 
@@ -78,13 +81,15 @@ make sure you pay attention to the imports in the source files.
 * http://docs.spring.io/spring-boot/docs/1.1.3.RELEASE/reference/htmlsingle/#howto-terminate-ssl-in-tomcat
   * More missing imports
 
-TO GET HTTPS CONNECTIONS TO WORK on Kali, I had to comment out the
-following line in /usr/lib/jvm/java-6-openjdk-i386/jre/lib/security/java.security. 
+### Platform Bugs
+
+**TO GET HTTPS CONNECTIONS TO WORK** on Kali, I had to comment out the
+following line in **/usr/lib/jvm/java-6-openjdk-i386/jre/lib/security/java.security**: 
  
-  54 # security.provider.9=sun.security.pkcs11.SunPKCS11 ${java.home}/lib/security/nss.cfg
+        # security.provider.9=sun.security.pkcs11.SunPKCS11 ${java.home}/lib/security/nss.cfg
 
 Make sure you're editing the file that is associated with the JRE that is
 set to default on your system by running. I my case, I did this by
 running:
 
-  update-alternatives --display java
+        update-alternatives --display java
